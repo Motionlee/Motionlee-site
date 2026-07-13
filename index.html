@@ -78,15 +78,6 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
 
 .nav-right { display: flex; align-items: center; gap: 12px; }
 
-.nav-wa {
-  display: flex; align-items: center; gap: 7px;
-  background: #25D366; color: var(--white);
-  padding: 8px 16px; border-radius: 8px;
-  font-size: 13px; font-weight: 600;
-  text-decoration: none; transition: opacity 0.15s;
-}
-.nav-wa:hover { opacity: 0.88; }
-
 .nav-cta {
   background: var(--ink); color: var(--white);
   padding: 9px 20px; border-radius: 8px;
@@ -581,17 +572,156 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
 /* ── WHATSAPP FLOAT ── */
-.wa-float {
+/* ── AI CHAT WIDGET ── */
+.chat-float {
   position: fixed; bottom: 28px; right: 28px; z-index: 500;
   width: 56px; height: 56px;
-  background: #25D366; border-radius: 50%;
+  background: var(--indigo); border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 26px; text-decoration: none;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  border: none; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(67,56,202,0.4);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.wa-float:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.5); }
+.chat-float:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(67,56,202,0.5); }
+.chat-float svg { width: 26px; height: 26px; }
+
+.chat-window {
+  position: fixed; bottom: 96px; right: 28px; z-index: 600;
+  width: 360px; max-width: calc(100vw - 40px);
+  height: 500px; max-height: calc(100vh - 140px);
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-window.open { display: flex; }
+
+.chat-header {
+  background: var(--ink);
+  color: var(--white);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-header-info { display: flex; align-items: center; gap: 10px; }
+
+.chat-header-badge {
+  width: 32px; height: 32px;
+  background: var(--lime);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; color: var(--ink); font-size: 14px;
+}
+
+.chat-header-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; }
+.chat-header-sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 1px; }
+
+.chat-close {
+  background: none; border: none; color: var(--white); opacity: 0.7;
+  cursor: pointer; font-size: 20px; line-height: 1; padding: 4px;
+}
+.chat-close:hover { opacity: 1; }
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #FAFAFA;
+}
+
+.chat-msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.chat-msg.bot {
+  background: var(--white);
+  border: 1px solid #E5E7EB;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-msg.user {
+  background: var(--indigo);
+  color: var(--white);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-typing {
+  align-self: flex-start;
+  padding: 10px 14px;
+  background: var(--white);
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  display: flex;
+  gap: 4px;
+}
+
+.chat-typing span {
+  width: 6px; height: 6px;
+  background: #9CA3AF;
+  border-radius: 50%;
+  animation: chatBounce 1.2s infinite;
+}
+.chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes chatBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #E5E7EB;
+  background: var(--white);
+}
+
+.chat-input {
+  flex: 1;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 20px;
+  padding: 9px 16px;
+  font-size: 13.5px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+}
+.chat-input:focus { border-color: var(--indigo); }
+
+.chat-send {
+  width: 36px; height: 36px;
+  background: var(--indigo);
+  border: none;
+  border-radius: 50%;
+  color: var(--white);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.chat-send:hover { background: #3730A3; }
+.chat-send:disabled { opacity: 0.5; cursor: default; }
+
+@media (max-width: 480px) {
+  .chat-window { width: calc(100vw - 32px); right: 16px; bottom: 88px; }
+  .chat-float { right: 16px; }
+}
 
 /* ── TOAST ── */
 .toast {
@@ -676,10 +806,6 @@ footer p { font-size: 12px; color: #374151; }
     <li><a href="#hosting">Hosting</a></li>
   </ul>
   <div class="nav-right">
-    <a class="nav-wa" href="https://wa.me/447487633008" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      WhatsApp
-    </a>
     <a class="nav-cta" href="#contact">Get a Quote</a>
   </div>
 </nav>
@@ -962,13 +1088,6 @@ footer p { font-size: 12px; color: #374151; }
           </div>
         </div>
         <div class="contact-detail">
-          <div class="contact-detail-icon">📱</div>
-          <div class="contact-detail-text">
-            <strong>WhatsApp</strong>
-            07487 633008
-          </div>
-        </div>
-        <div class="contact-detail">
           <div class="contact-detail-icon">📍</div>
           <div class="contact-detail-text">
             <strong>Based in</strong>
@@ -1030,9 +1149,32 @@ footer p { font-size: 12px; color: #374151; }
 </footer>
 
 <!-- WHATSAPP FLOAT -->
-<a class="wa-float" href="https://wa.me/447487633008" target="_blank" title="Chat on WhatsApp">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+<!-- AI CHAT WIDGET -->
+<button class="chat-float" id="chat-toggle" title="Chat with us">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<div class="chat-window" id="chat-window">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-header-badge">M</div>
+      <div>
+        <div class="chat-header-title">Motionlee Assistant</div>
+        <div class="chat-header-sub">Usually replies instantly</div>
+      </div>
+    </div>
+    <button class="chat-close" id="chat-close">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="chat-msg bot">Hi! 👋 I'm Motionlee's assistant. Ask me about pricing, services, or turnaround times — or tell me what you're looking to build.</div>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" type="text" placeholder="Type a message..." />
+    <button class="chat-send" id="chat-send">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
@@ -1100,6 +1242,114 @@ footer p { font-size: 12px; color: #374151; }
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.style.opacity = 1; });
   }, { threshold: 0.1 });
+
+  // ── AI CHAT WIDGET ──
+  const chatToggle = document.getElementById('chat-toggle');
+  const chatWindow = document.getElementById('chat-window');
+  const chatClose = document.getElementById('chat-close');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSend = document.getElementById('chat-send');
+
+  let chatHistory = [];
+  let leadCaptured = false;
+
+  chatToggle.addEventListener('click', () => {
+    chatWindow.classList.toggle('open');
+    if (chatWindow.classList.contains('open')) chatInput.focus();
+  });
+  chatClose.addEventListener('click', () => chatWindow.classList.remove('open'));
+
+  function addMessage(text, sender) {
+    const div = document.createElement('div');
+    div.className = `chat-msg ${sender}`;
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'chat-typing';
+    div.id = 'chat-typing-indicator';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function hideTyping() {
+    const el = document.getElementById('chat-typing-indicator');
+    if (el) el.remove();
+  }
+
+  async function saveLead(lead) {
+    try {
+      var sbClient = window.__motionleeSb;
+      if (!sbClient && window.supabase) {
+        sbClient = window.supabase.createClient(
+          'https://dhbxxlykqfkjdgwiyopv.supabase.co',
+          'sb_publishable_WUAJs6haVwmt38HbQi4REw_N23BJIxL'
+        );
+      }
+      await sbClient.from('enquiries').insert({
+        name: lead.name,
+        business: '—',
+        email: lead.email,
+        service: 'Chatbot enquiry',
+        message: lead.need || 'Captured via AI chat widget',
+      });
+    } catch (err) {
+      console.error('Could not save chat lead:', err);
+    }
+  }
+
+  async function sendChatMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    addMessage(text, 'user');
+    chatHistory.push({ role: 'user', content: text });
+    chatInput.value = '';
+    chatSend.disabled = true;
+    showTyping();
+
+    try {
+      const res = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHistory }),
+      });
+      const data = await res.json();
+      hideTyping();
+
+      let reply = data.reply || "Sorry, something went wrong — please email us at grow@motionlee.ai and we'll get back to you.";
+
+      // Check for a lead-capture marker from the AI and strip it from what's shown
+      const leadMatch = reply.match(/LEAD_CAPTURED:(\{.*\})/);
+      if (leadMatch && !leadCaptured) {
+        try {
+          const lead = JSON.parse(leadMatch[1]);
+          saveLead(lead);
+          leadCaptured = true;
+        } catch (e) { console.error('Could not parse lead JSON:', e); }
+        reply = reply.replace(/LEAD_CAPTURED:\{.*\}/, '').trim();
+      }
+
+      addMessage(reply, 'bot');
+      chatHistory.push({ role: 'assistant', content: reply });
+    } catch (err) {
+      hideTyping();
+      addMessage("Sorry, I'm having trouble connecting. Please email us at grow@motionlee.ai and we'll help right away.", 'bot');
+      console.error('Chat error:', err);
+    }
+
+    chatSend.disabled = false;
+  }
+
+  chatSend.addEventListener('click', sendChatMessage);
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') sendChatMessage();
+  });
 </script>
 </body>
 </html>
