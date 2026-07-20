@@ -766,20 +766,83 @@ footer p { font-size: 12px; color: #374151; }
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
   .about-visual { display: none; }
   .form-row { grid-template-columns: 1fr; }
-  footer { flex-direction: column; text-align: center; }
+  footer { flex-direction: column; text-align: center; padding: 32px 20px; }
   .footer-links { flex-wrap: wrap; justify-content: center; }
+  .pricing-card.featured { transform: none; }
+  .section { padding: 72px 20px; }
 }
 
 @media (max-width: 600px) {
-  .hero { padding: 120px 20px 80px; }
-  .section { padding: 72px 20px; }
-  .pricing-grid { grid-template-columns: 1fr; }
-  .portfolio-grid { grid-template-columns: 1fr 1fr; }
+  /* Hero */
+  .hero { padding: 110px 16px 80px; }
   .hero-title {
-    font-size: clamp(28px, 9.5vw, 80px);
-    letter-spacing: -0.5px;
+    font-size: clamp(30px, 9vw, 60px);
+    letter-spacing: -1px;
+    line-height: 1.08;
+    word-break: break-word;
     overflow-wrap: break-word;
+    max-width: 100%;
   }
+  .hero-title em {
+    -webkit-text-stroke: 1px var(--lime);
+    display: inline-block;
+    max-width: 100%;
+  }
+  .hero-pill { font-size: 10px; padding: 6px 12px; letter-spacing: 0.8px; }
+  .hero-sub { font-size: 15px; padding: 0 4px; }
+  .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; padding: 0 8px; }
+  .hero-actions a { text-align: center; }
+
+  /* Sections */
+  .section { padding: 56px 16px; }
+  .section-title { font-size: clamp(24px, 7vw, 36px); letter-spacing: -0.5px; }
+
+  /* Services */
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { padding: 28px 22px; }
+  .service-name { font-size: 16px; }
+
+  /* Pricing */
+  .pricing-grid { grid-template-columns: 1fr; }
+  .price-amount { font-size: 36px; }
+  .pricing-card.featured { transform: none; }
+
+  /* Portfolio */
+  .portfolio-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* About */
+  .about-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .about-stat-num { font-size: 22px; }
+  .about-stat { padding: 14px 8px; }
+
+  /* Contact */
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .contact-form { padding: 20px 16px; }
+
+  /* Hosting teaser */
+  #hosting .container-sm { padding: 0 16px; }
+  #hosting div[style*="gap:32px"] { gap: 16px !important; flex-wrap: wrap; justify-content: center; }
+
+  /* Footer */
+  footer { padding: 28px 16px; gap: 16px; }
+  .footer-links { gap: 14px; }
+  .footer-logo { font-size: 16px; }
+
+  /* Nav */
+  nav { padding: 0 16px; height: 60px; }
+  .nav-cta { padding: 8px 14px; font-size: 12px; }
+  .logo-name { font-size: 15px; }
+  .logo-mark svg { width: 36px; height: 36px; }
+
+  /* Chat widget on mobile */
+  .chat-window {
+    width: calc(100vw - 24px) !important;
+    right: 12px !important;
+    bottom: 84px !important;
+    height: 70vh !important;
+    max-height: 500px !important;
+  }
+  .chat-float { right: 12px !important; bottom: 20px !important; }
 }
 </style>
 </head>
@@ -1136,17 +1199,91 @@ footer p { font-size: 12px; color: #374151; }
 </section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Motion<span>lee</span></div>
-  <ul class="footer-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#portfolio">Work</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <p>© 2026 Motionlee Studio · Stoke-on-Trent, UK</p>
+<footer style="flex-direction:column;gap:0;padding:0;">
+
+  <!-- Main footer row -->
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:40px;padding:52px 48px 40px;width:100%;">
+
+    <!-- Brand -->
+    <div style="min-width:180px;">
+      <div class="footer-logo" style="margin-bottom:12px;">Motion<span>lee</span></div>
+      <p style="font-size:13px;color:#4B5563;line-height:1.6;max-width:220px;">AI-powered design studio for businesses that mean business.</p>
+      <p style="font-size:12px;color:#374151;margin-top:10px;">Stoke-on-Trent, UK</p>
+    </div>
+
+    <!-- Services links -->
+    <div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#4B5563;margin-bottom:14px;">Services</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
+        <li><a href="#services" style="font-size:13px;color:#6B7280;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">Web Design</a></li>
+        <li><a href="#services" style="font-size:13px;color:#6B7280;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">Product Visuals</a></li>
+        <li><a href="#services" style="font-size:13px;color:#6B7280;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">Motion Content</a></li>
+        <li><a href="#hosting" style="font-size:13px;color:#6B7280;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">Managed Hosting</a></li>
+      </ul>
+    </div>
+
+    <!-- Company links -->
+    <div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#4B5563;margin-bottom:14px;">Company</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
+        <li><a href="#about" style="font-size:13px;color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">About Us</a></li>
+        <li><a href="#portfolio" style="font-size:13px;color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">Our Work</a></li>
+        <li><a href="#pricing" style="font-size:13px;color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">Pricing</a></li>
+        <li><a href="#contact" style="font-size:13px;color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#4B5563;margin-bottom:14px;">Get In Touch</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
+        <li><a href="mailto:grow@motionlee.ai" style="font-size:13px;color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">grow@motionlee.ai</a></li>
+        <li><a href="https://motionlee.ai" style="font-size:13px;color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#6B7280'">Client Portal</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Divider -->
+  <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 48px;"></div>
+
+  <!-- Bottom bar -->
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:20px 48px;width:100%;">
+    <p style="font-size:12px;color:#374151;">© 2026 Motionlee Studio · Stoke-on-Trent, UK</p>
+    <ul style="list-style:none;display:flex;gap:20px;flex-wrap:wrap;">
+      <li><a href="#" onclick="showLegalPage('terms');return false;" style="font-size:12px;color:#4B5563;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='#9CA3AF'" onmouseout="this.style.color='#4B5563'">Terms & Conditions</a></li>
+      <li><a href="#" onclick="showLegalPage('privacy');return false;" style="font-size:12px;color:#4B5563;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='#9CA3AF'" onmouseout="this.style.color='#4B5563'">Privacy Policy</a></li>
+      <li><a href="#" onclick="showLegalPage('hosting');return false;" style="font-size:12px;color:#4B5563;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='#9CA3AF'" onmouseout="this.style.color='#4B5563'">Hosting Terms</a></li>
+    </ul>
+  </div>
+
 </footer>
+
+<!-- ── LEGAL PAGES OVERLAY ── -->
+<div id="legal-overlay" style="display:none;position:fixed;inset:0;background:var(--white);z-index:1000;overflow-y:auto;">
+  <div style="max-width:760px;margin:0 auto;padding:48px 24px 80px;">
+
+    <!-- Close bar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid var(--border);">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:32px;height:32px;background:var(--ink);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--lime);">M</div>
+        <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--ink);">Motionlee</span>
+      </div>
+      <button onclick="hideLegalPage()" style="background:var(--ink);color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">← Back to Site</button>
+    </div>
+
+    <!-- Legal tabs -->
+    <div style="display:flex;gap:8px;margin-bottom:36px;flex-wrap:wrap;">
+      <button onclick="showLegalPage('terms')" id="tab-terms" style="padding:8px 18px;border-radius:30px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--ink);background:var(--ink);color:#fff;font-family:'Inter',sans-serif;">Terms & Conditions</button>
+      <button onclick="showLegalPage('privacy')" id="tab-privacy" style="padding:8px 18px;border-radius:30px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--grey);font-family:'Inter',sans-serif;">Privacy Policy</button>
+      <button onclick="showLegalPage('hosting')" id="tab-hosting" style="padding:8px 18px;border-radius:30px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--grey);font-family:'Inter',sans-serif;">Hosting Terms</button>
+    </div>
+
+    <!-- Content area -->
+    <div id="legal-content"></div>
+
+  </div>
+</div>
 
 <!-- WHATSAPP FLOAT -->
 <!-- AI CHAT WIDGET -->
@@ -1350,6 +1487,108 @@ footer p { font-size: 12px; color: #374151; }
   chatInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') sendChatMessage();
   });
+
+  // ── LEGAL PAGES ──
+  const legalContent = {
+    terms: `
+      <h1 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;margin-bottom:8px;">Terms & Conditions</h1>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:36px;">Last Updated: July 2026 · Governed by English Law</p>
+      <div style="background:var(--card);border-radius:12px;padding:20px;margin-bottom:32px;font-size:14px;line-height:1.7;color:var(--grey);">These Terms and Conditions govern the relationship between Motionlee ("we", "us") and our clients ("you"). By engaging our services or using our website, you agree to be bound by these terms.</div>
+      ${legalSection('1. Company Information','<table style="width:100%;border-collapse:collapse;font-size:14px;">' + infoRow('Business','Motionlee Studio') + infoRow('Founders','Rondel Lee & Tarriana Lee') + infoRow('Based in','Stoke-on-Trent, United Kingdom') + infoRow('Email','grow@motionlee.ai') + infoRow('Website','motionlee.co.uk') + infoRow('Portal','motionlee.ai') + '</table>')}
+      ${legalSection('2. Services','We offer Web Design (from £499), Product Visuals (from £149/pack), Motion Content (from £199/month), Managed Hosting (from £15/month), and Brand Identity (from £299). All prices confirmed in writing before work begins.')}
+      ${legalSection('3. Project Process','All projects begin with a free consultation. We provide a written proposal confirming scope, timeline, cost, and revisions. Work begins once a deposit and signed agreement are received. Final files are delivered once full payment clears.')}
+      ${legalSection('4. Client Responsibilities','You agree to: provide accurate briefs and timely feedback; supply all required content, images, and copy; ensure materials are legally owned by you; make payments on schedule; and review deliverables within agreed timelines.')}
+      ${legalSection('5. Payment Terms','A 50% deposit is required before work begins. The remaining 50% is due on completion. Monthly retainers are invoiced in advance. Late payments (30+ days) may result in suspended work. All invoices are due within 14 days of issue.')}
+      ${legalSection('6. Revisions & Changes','Each project includes a specified number of revision rounds. Major redesigns, direction changes after approval, or work outside agreed scope will be quoted separately and confirmed in writing before proceeding.')}
+      ${legalSection('7. Intellectual Property','Upon full payment, you receive full ownership of completed deliverables. Motionlee retains the right to showcase completed work in our portfolio unless you request otherwise in writing. Work in progress remains our property until full payment is received.')}
+      ${legalSection('8. Warranties','We warrant all work is performed with professional care. We cannot guarantee specific search rankings, revenue growth, or business results. Our liability is limited to the total amount paid for the specific project in question.')}
+      ${legalSection('9. Confidentiality','Both parties agree to keep confidential any sensitive business information shared during the project. Motionlee will not share or sell client information to third parties without consent, except where required by law.')}
+      ${legalSection('10. Governing Law','These Terms are governed by the laws of England and Wales. Any disputes will be subject to the exclusive jurisdiction of the English courts. We will always attempt to resolve disputes through open communication first.')}
+      ${legalSection('11. Changes to Terms','We may update these terms periodically. Continued use of our services constitutes acceptance of the revised terms. Existing clients will be notified of material changes by email.')}
+      <div style="background:var(--ink);color:#fff;border-radius:12px;padding:24px;margin-top:32px;font-size:13px;line-height:1.6;">By engaging Motionlee's services or using our website, you confirm that you have read and agree to these Terms and Conditions.<br><br>Questions? Email us at <strong>grow@motionlee.ai</strong></div>
+    `,
+    privacy: `
+      <h1 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;margin-bottom:8px;">Privacy Policy</h1>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:36px;">Last Updated: July 2026 · UK GDPR Compliant</p>
+      <div style="background:var(--card);border-radius:12px;padding:20px;margin-bottom:32px;font-size:14px;line-height:1.7;color:var(--grey);">Motionlee is committed to protecting your personal data in line with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. This policy explains how we collect, use, and protect your information.</div>
+      ${legalSection('1. Who We Are','Motionlee Studio is the data controller for all personal data collected through motionlee.co.uk and our services. Contact: grow@motionlee.ai')}
+      ${legalSection('2. What Data We Collect','We collect: contact information (name, email, phone, business name); project-related information you share with us; enquiry details submitted through our website; website usage data via cookies and analytics; and communications history.')}
+      ${legalSection('3. How We Use Your Data','We use your data to: deliver and manage your project; send project updates, invoices, and relevant communications; respond to enquiries; improve our services; and comply with legal obligations. We will never sell your data to third parties.')}
+      ${legalSection('4. Legal Basis for Processing','We process your data under: contractual necessity (to deliver services you have engaged); legitimate interests (to manage our business and client relationships); and your consent (for marketing communications, which you can withdraw at any time).')}
+      ${legalSection('5. Data Retention','We retain your data for as long as necessary to provide our services and meet legal obligations. Client project data is retained for 7 years for accounting purposes. You may request deletion at any time for data not required by law.')}
+      ${legalSection('6. Your Rights','Under UK GDPR you have the right to: access your personal data; correct inaccurate data; request deletion of your data; object to processing; withdraw consent at any time. To exercise any of these rights, email grow@motionlee.ai.')}
+      ${legalSection('7. Cookies','Our website uses cookies for analytics and performance monitoring. You may disable cookies through your browser settings at any time. Disabling cookies may affect the functionality of our website.')}
+      ${legalSection('8. Third Party Services','We use trusted third-party services including Supabase (data storage), Netlify (hosting), and Resend (email delivery). Each provider maintains their own privacy policy and appropriate security measures.')}
+      ${legalSection('9. Data Security','We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, alteration, disclosure, or destruction. Our systems use SSL encryption and secure authentication.')}
+      ${legalSection('10. Contact & Complaints','For privacy-related queries contact grow@motionlee.ai. If you are not satisfied with our response, you have the right to lodge a complaint with the Information Commissioner\'s Office (ICO) at ico.org.uk.')}
+      <div style="background:var(--ink);color:#fff;border-radius:12px;padding:24px;margin-top:32px;font-size:13px;line-height:1.6;">Privacy questions? Email <strong>grow@motionlee.ai</strong> and we'll respond within 48 hours.</div>
+    `,
+    hosting: `
+      <h1 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;margin-bottom:8px;">Hosting Terms</h1>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:36px;">Last Updated: July 2026 · Applies to all Motionlee Hosting Plans</p>
+      <div style="background:var(--card);border-radius:12px;padding:20px;margin-bottom:32px;font-size:14px;line-height:1.7;color:var(--grey);">These Hosting Terms apply to all Motionlee managed hosting plans and supplement our main Terms & Conditions. By subscribing to a hosting plan, you agree to these terms.</div>
+      ${legalSection('1. Hosting Plans','We offer three plans: Basic Hosting (£15/month) — website hosting, SSL, uptime monitoring; Hosting + Support (£25/month) — everything in Basic plus monthly content updates and priority support; Hosting + Content (£50/month) — everything above plus monthly content creation.')}
+      ${legalSection('2. Payment & Renewal','Hosting plans are invoiced monthly in advance. Plans renew automatically unless cancelled with 30 days written notice. Failure to pay within 14 days of invoice may result in service suspension.')}
+      ${legalSection('3. Uptime & Performance','We target 99.9% uptime for all hosted sites. Planned maintenance will be communicated in advance. We are not liable for downtime caused by third-party infrastructure, DDoS attacks, or factors outside our reasonable control.')}
+      ${legalSection('4. Client Responsibilities','Domain registration and renewal costs are the client\'s responsibility unless otherwise agreed. Clients must notify us of domain renewals to avoid service interruption. Clients must not use hosting services for illegal content or activities.')}
+      ${legalSection('5. SSL Certificates','Free SSL certificates are included with all plans via Let\'s Encrypt. SSL certificates renew automatically. We are not liable for issues arising from expired certificates outside our control.')}
+      ${legalSection('6. Client Portal','All hosting clients receive access to the Motionlee Client Portal at motionlee.ai. The portal allows self-service editing of content, hours, products, and social links. Portal access is provided via secure magic link authentication.')}
+      ${legalSection('7. Backups','We perform regular backups of hosted sites. However, clients are encouraged to maintain their own copies of important content. We are not liable for data loss beyond our reasonable control.')}
+      ${legalSection('8. Cancellation','Hosting plans can be cancelled with 30 days written notice to grow@motionlee.ai. Upon cancellation, all site files will be provided for migration within 7 working days. No refunds are issued for part-months already invoiced.')}
+      ${legalSection('9. Fair Use','Hosting plans are for standard small business websites. Excessively high-traffic sites, large file storage, or resource-intensive applications may require an upgraded arrangement. We will discuss this with you before making any changes.')}
+      ${legalSection('10. Service Changes','We reserve the right to adjust hosting plan pricing with 30 days notice. We will always honour your current rate for a minimum of 12 months from your plan start date.')}
+      <div style="background:var(--ink);color:#fff;border-radius:12px;padding:24px;margin-top:32px;font-size:13px;line-height:1.6;">Hosting questions? Email <strong>grow@motionlee.ai</strong> or use the chat assistant on our website.</div>
+    `
+  };
+
+  function infoRow(label, value) {
+    return '<tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 12px;font-size:13px;font-weight:600;color:var(--grey);width:140px;">' + label + '</td><td style="padding:10px 12px;font-size:13px;color:var(--ink);">' + value + '</td></tr>';
+  }
+
+  function legalSection(title, content) {
+    return '<div style="margin-bottom:28px;"><h3 style="font-family:\'Syne\',sans-serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--indigo);display:inline-block;">' + title + '</h3><div style="font-size:14px;line-height:1.8;color:var(--grey);margin-top:10px;">' + content + '</div></div>';
+  }
+
+  function showLegalPage(page) {
+    document.getElementById('legal-overlay').style.display = 'block';
+    document.getElementById('legal-content').innerHTML = legalContent[page] || '';
+    document.body.style.overflow = 'hidden';
+    document.getElementById('legal-overlay').scrollTop = 0;
+
+    // Update tab styles
+    ['terms','privacy','hosting'].forEach(t => {
+      const btn = document.getElementById('tab-' + t);
+      if (btn) {
+        btn.style.background = t === page ? 'var(--ink)' : 'transparent';
+        btn.style.color = t === page ? '#fff' : 'var(--grey)';
+        btn.style.borderColor = t === page ? 'var(--ink)' : 'var(--border)';
+      }
+    });
+  }
+
+  function hideLegalPage() {
+    document.getElementById('legal-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
 </script>
+
+<style>
+/* Footer mobile fixes */
+@media (max-width: 760px) {
+  footer > div:first-child {
+    padding: 40px 20px 32px !important;
+    gap: 28px !important;
+  }
+  footer > div:last-child {
+    padding: 16px 20px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  footer > div:nth-child(3) {
+    margin: 0 20px !important;
+  }
+}
+</style>
 </body>
 </html>
