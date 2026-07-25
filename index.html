@@ -1035,7 +1035,155 @@ nav.scrolled {
 .chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
 .chat-send svg { width: 15px; height: 15px; }
 
-/* ── SCROLL REVEAL ── */
+/* ── WORK BENTO GRID ── */
+.work-bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 80px;
+  gap: 14px;
+  margin-top: 72px;
+}
+
+.work-card {
+  cursor: pointer;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: #0D0E12;
+  position: relative;
+  transition: border-color 0.3s, transform 0.25s;
+}
+
+.work-card:hover {
+  border-color: rgba(67,56,202,0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* Bento positions */
+.w-c1 { grid-column: 1 / 8; grid-row: 1 / 6; }  /* Élan - large left */
+.w-c2 { grid-column: 8 / 13; grid-row: 1 / 4; }  /* North & Co - top right */
+.w-c3 { grid-column: 8 / 13; grid-row: 4 / 6; }  /* Apex - bottom right small */
+.w-c4 { grid-column: 1 / 6; grid-row: 6 / 10; }  /* Iron Oak - bottom left */
+.w-c5 { grid-column: 6 / 13; grid-row: 6 / 10; } /* Haven & Hart - bottom right wide */
+
+.work-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s;
+  display: block;
+}
+
+.work-card:hover img { transform: scale(1.03); opacity: 0.85; }
+
+.work-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,11,14,0.92) 0%, rgba(10,11,14,0.3) 40%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+}
+
+.work-card:hover .work-overlay { opacity: 1; }
+
+/* Always visible label at bottom */
+.work-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 24px 22px;
+  background: linear-gradient(to top, rgba(10,11,14,0.88) 0%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.work-label-left {}
+
+.work-label-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 5px;
+}
+
+.work-label-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+}
+
+.w-c1 .work-label-title { font-size: 24px; }
+
+.work-label-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 3px;
+}
+
+.work-label-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.work-label-tag {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+.work-cta-pill {
+  background: var(--lime);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.work-card:hover .work-cta-pill {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .work-bento {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 240px;
+  }
+  .w-c1, .w-c2, .w-c3, .w-c4, .w-c5 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .w-c1 { grid-column: span 2; }
+}
+
+@media (max-width: 600px) {
+  .work-bento { grid-template-columns: 1fr; grid-auto-rows: 260px; }
+  .w-c1 { grid-column: span 1; }
+  .work-label-title { font-size: 18px !important; }
+}
 .reveal {
   opacity: 0; transform: translateY(32px);
   transition: opacity 0.7s ease, transform 0.7s ease;
@@ -1411,6 +1559,173 @@ footer {
   </div>
 </section>
 
+<!-- FEATURED PROJECTS -->
+<section class="section section-soft" id="portfolio">
+  <div class="container">
+    <div class="eyebrow reveal">Featured Projects</div>
+    <h2 class="section-title reveal reveal-delay-1">Designed to inspire.<br><em>Built to convert.</em></h2>
+    <p class="section-sub reveal reveal-delay-2">Every project is a real business problem solved with premium design, built fast, and delivered to grow.</p>
+
+    <div class="work-bento">
+
+      <!-- ÉLAN STUDIO — large left -->
+      <div class="work-card w-c1 reveal" onclick="openCase('elan')">
+        <img src="./Elan_studio.png" alt="Élan Studio"/>
+        <div class="work-label">
+          <div class="work-label-left">
+            <div class="work-label-num">PROJECT 01</div>
+            <div class="work-label-title">Élan Studio</div>
+            <div class="work-label-sub">Luxury Beauty Salon</div>
+            <div class="work-label-tags">
+              <span class="work-label-tag">Brand Identity</span>
+              <span class="work-label-tag">UI/UX</span>
+              <span class="work-label-tag">Responsive Website</span>
+            </div>
+          </div>
+          <div class="work-cta-pill">View Case Study →</div>
+        </div>
+      </div>
+
+      <!-- NORTH & CO — top right -->
+      <div class="work-card w-c2 reveal reveal-delay-1" onclick="openCase('north')">
+        <img src="./NORTH___CO_.png" alt="North & Co."/>
+        <div class="work-label">
+          <div class="work-label-left">
+            <div class="work-label-num">PROJECT 02</div>
+            <div class="work-label-title">North & Co.</div>
+            <div class="work-label-sub">Premium Barbershop</div>
+            <div class="work-label-tags">
+              <span class="work-label-tag">Brand Identity</span>
+              <span class="work-label-tag">Booking Experience</span>
+            </div>
+          </div>
+          <div class="work-cta-pill">View →</div>
+        </div>
+      </div>
+
+      <!-- APEX DETAIL — bottom right small -->
+      <div class="work-card w-c3 reveal reveal-delay-2" onclick="openCase('apex')">
+        <img src="./APEX_DETAIL.png" alt="Apex Detail"/>
+        <div class="work-label">
+          <div class="work-label-left">
+            <div class="work-label-num">PROJECT 03</div>
+            <div class="work-label-title">Apex Detail</div>
+            <div class="work-label-sub">Premium Automotive</div>
+          </div>
+          <div class="work-cta-pill">View →</div>
+        </div>
+      </div>
+
+      <!-- IRON OAK — bottom left -->
+      <div class="work-card w-c4 reveal" onclick="openCase('ironoak')">
+        <img src="./Iron_oak_brewing_co.png" alt="Iron Oak Brewing Co."/>
+        <div class="work-label">
+          <div class="work-label-left">
+            <div class="work-label-num">PROJECT 04</div>
+            <div class="work-label-title">Iron Oak Brewing Co.</div>
+            <div class="work-label-sub">Craft Brewery & Taproom</div>
+            <div class="work-label-tags">
+              <span class="work-label-tag">E-commerce</span>
+              <span class="work-label-tag">Packaging</span>
+            </div>
+          </div>
+          <div class="work-cta-pill">View →</div>
+        </div>
+      </div>
+
+      <!-- HAVEN & HART — bottom right wide -->
+      <div class="work-card w-c5 reveal reveal-delay-1" onclick="openCase('haven')">
+        <img src="./Haven___heart.png" alt="Haven & Hart"/>
+        <div class="work-label">
+          <div class="work-label-left">
+            <div class="work-label-num">PROJECT 05</div>
+            <div class="work-label-title">Haven & Hart</div>
+            <div class="work-label-sub">Luxury Real Estate</div>
+            <div class="work-label-tags">
+              <span class="work-label-tag">Property Platform</span>
+              <span class="work-label-tag">UX Design</span>
+            </div>
+          </div>
+          <div class="work-cta-pill">View Case Study →</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CASE STUDY OVERLAY ── -->
+<div id="case-overlay" style="display:none;position:fixed;inset:0;background:#0A0B0E;z-index:500;overflow-y:auto;">
+  <div style="max-width:860px;margin:0 auto;padding:0 24px 100px;">
+
+    <!-- Back bar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:56px;position:sticky;top:0;background:#0A0B0E;z-index:10;">
+      <button onclick="closeCase()" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">← Back to Work</button>
+      <div style="font-size:12px;color:rgba(255,255,255,0.2);letter-spacing:1px;" id="case-url">motionlee.co.uk/work/elan-studio</div>
+    </div>
+
+    <!-- Hero image -->
+    <div id="case-hero-img" style="width:100%;height:420px;border-radius:20px;overflow:hidden;margin-bottom:56px;position:relative;">
+      <img id="case-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;"/>
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,14,0.6) 0%,transparent 60%);"></div>
+    </div>
+
+    <!-- Header -->
+    <div style="margin-bottom:56px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:14px;" id="case-industry-top">Luxury Beauty Salon</div>
+      <h1 style="font-family:'Syne',sans-serif;font-size:clamp(36px,5vw,56px);font-weight:800;color:#fff;letter-spacing:-1.5px;line-height:1.05;margin-bottom:20px;" id="case-title">Élan Studio</h1>
+      <p style="font-size:17px;color:rgba(255,255,255,0.5);line-height:1.8;max-width:600px;" id="case-intro">A full brand identity and digital presence for a luxury beauty salon that needed to match the premium experience they deliver in person. Clean, minimal, and beautifully feminine — without being generic.</p>
+    </div>
+
+    <!-- Project details box -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;margin-bottom:56px;" id="case-details-box">
+      <div style="background:#0D0E12;padding:28px 24px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Industry</div>
+        <div style="font-size:14px;font-weight:600;color:#fff;" id="case-industry">Luxury Beauty Salon</div>
+      </div>
+      <div style="background:#0D0E12;padding:28px 24px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Services</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.9;" id="case-services">Brand Identity<br>Website Design<br>UI/UX<br>Responsive Design</div>
+      </div>
+      <div style="background:#0D0E12;padding:28px 24px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Timeline</div>
+        <div style="font-size:14px;font-weight:600;color:#fff;" id="case-timeline">3 Weeks</div>
+      </div>
+      <div style="background:#0D0E12;padding:28px 24px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;">Platform</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.9;" id="case-platform">WordPress<br>Elementor<br>WooCommerce</div>
+      </div>
+    </div>
+
+    <!-- Content sections -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:56px;" id="case-content">
+      <div>
+        <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:-0.3px;">The Challenge</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.85;" id="case-challenge">The client had an exceptional in-person experience but a digital presence that didn't reflect their premium positioning. Their existing website was generic, slow, and failing to convert visitors into bookings.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:-0.3px;">The Solution</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.85;" id="case-solution">We built a brand-new identity system — typography, colour palette, and visual language — then translated it into a fast, mobile-first website with seamless online booking integration. Delivered in under 3 weeks.</p>
+      </div>
+    </div>
+
+    <!-- Second image -->
+    <div style="width:100%;height:340px;border-radius:16px;overflow:hidden;margin-bottom:56px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);" id="case-img2-wrap">
+      <img id="case-img2" src="" alt="" style="width:100%;height:100%;object-fit:cover;opacity:0.8;"/>
+    </div>
+
+    <!-- CTA box -->
+    <div style="background:linear-gradient(135deg,#111228 0%,#0D0E12 100%);border:1px solid rgba(67,56,202,0.2);border-radius:20px;padding:52px 48px;text-align:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(67,56,202,0.12),transparent 70%);pointer-events:none;"></div>
+      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.8px;margin-bottom:10px;position:relative;z-index:2;">Like what you see?</div>
+      <div style="font-size:16px;color:rgba(255,255,255,0.45);margin-bottom:32px;position:relative;z-index:2;">Let's build your business next.</div>
+      <a href="mailto:grow@motionlee.ai" style="display:inline-block;background:var(--lime);color:var(--ink);font-size:14px;font-weight:700;padding:15px 36px;border-radius:10px;text-decoration:none;position:relative;z-index:2;transition:all 0.2s;" onmouseover="this.style.boxShadow='0 12px 36px rgba(214,255,63,0.3)'" onmouseout="this.style.boxShadow='none'">Contact us via email</a>
+      <div style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.2);position:relative;z-index:2;">grow@motionlee.ai</div>
+    </div>
+
+  </div>
+</div>
+
 <!-- SERVICES -->
 <section class="section section-soft" id="services">
   <div class="container">
@@ -1640,124 +1955,6 @@ footer {
         </ul>
         <a href="#contact" class="btn-price-outline">Get Started</a>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- PORTFOLIO -->
-<section class="section section-soft" id="portfolio">
-  <div class="container">
-    <div class="eyebrow reveal">Our Work</div>
-    <h2 class="section-title reveal reveal-delay-1">Built to <em>impress.</em></h2>
-    <p class="section-sub reveal reveal-delay-2">Demo sites showcasing what Motionlee delivers — fast, bold, and built for results.</p>
-
-    <div class="portfolio-grid" style="margin-top:72px;">
-
-      <!-- 1: Stoke Barbers - keep original barbershop image -->
-      <div class="portfolio-card reveal">
-        <div class="portfolio-bg" style="position:absolute;inset:0;">
-          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&q=80&fit=crop" alt="Stoke Barbers" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);"/>
-        </div>
-        <div class="portfolio-overlay">
-          <div class="portfolio-tag">Barbershop</div>
-          <div class="portfolio-title">Stoke Barbers Co.</div>
-        </div>
-      </div>
-
-      <!-- 2: Ember & Oak - YOUR VIDEO -->
-      <div class="portfolio-card reveal reveal-delay-1">
-        <div class="portfolio-bg" style="position:absolute;inset:0;">
-          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;">
-            <source src="./ember-oak-coffee.mp4" type="video/mp4"/>
-            <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&q=80&fit=crop" alt="Ember Oak Coffee" style="width:100%;height:100%;object-fit:cover;"/>
-          </video>
-        </div>
-        <div class="portfolio-overlay">
-          <div class="portfolio-tag">Motion Content</div>
-          <div class="portfolio-title">Ember & Oak Coffee</div>
-        </div>
-      </div>
-
-      <!-- 3: Ron's Auto - landing page mockup -->
-      <div class="portfolio-card reveal reveal-delay-2">
-        <div class="portfolio-bg" style="position:absolute;inset:0;background:#0a0a0a;overflow:hidden;">
-          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0a0a0a 0%,#1a0a0a 100%);"></div>
-          <div style="position:absolute;top:0;left:0;right:0;height:18px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;padding:0 10px;gap:6px;">
-            <div style="width:4px;height:4px;border-radius:50%;background:#BC3030;"></div>
-            <div style="width:4px;height:4px;border-radius:50%;background:#C8A000;"></div>
-            <div style="width:4px;height:4px;border-radius:50%;background:#2D9E2D;"></div>
-            <div style="flex:1;margin-left:8px;height:6px;background:rgba(255,255,255,0.06);border-radius:2px;"></div>
-            <div style="width:28px;height:6px;background:#BC002D;border-radius:2px;"></div>
-          </div>
-          <div style="position:absolute;top:26px;left:12px;right:12px;">
-            <div style="font-size:6px;font-weight:700;color:rgba(255,255,255,0.2);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">STOKE-ON-TRENT'S TRUSTED GARAGE</div>
-            <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:2px;">HONEST WORK.</div>
-            <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:900;color:#BC002D;line-height:1.1;margin-bottom:10px;">NO SHORTCUTS.</div>
-            <div style="font-size:5.5px;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:10px;max-width:130px;">Full servicing, MOTs, and repairs from a team that treats every car like it's their own. Fixed price quotes, same-week bookings.</div>
-            <div style="display:flex;gap:6px;">
-              <div style="background:#BC002D;color:#fff;font-size:5px;font-weight:700;padding:5px 10px;border-radius:3px;letter-spacing:0.5px;">BOOK A SLOT</div>
-              <div style="border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);font-size:5px;font-weight:600;padding:5px 10px;border-radius:3px;">GET A QUOTE</div>
-            </div>
-          </div>
-          <div style="position:absolute;bottom:28px;left:12px;right:12px;display:flex;gap:8px;">
-            <div style="flex:1;text-align:center;">
-              <div style="font-size:11px;font-weight:800;color:#fff;">20+</div>
-              <div style="font-size:4.5px;color:rgba(255,255,255,0.3);margin-top:1px;">Years serving</div>
-            </div>
-            <div style="width:1px;background:rgba(255,255,255,0.08);"></div>
-            <div style="flex:1;text-align:center;">
-              <div style="font-size:11px;font-weight:800;color:#fff;">4.9★</div>
-              <div style="font-size:4.5px;color:rgba(255,255,255,0.3);margin-top:1px;">Google rating</div>
-            </div>
-            <div style="width:1px;background:rgba(255,255,255,0.08);"></div>
-            <div style="flex:1;text-align:center;">
-              <div style="font-size:11px;font-weight:800;color:#BC002D;">Same</div>
-              <div style="font-size:4.5px;color:rgba(255,255,255,0.3);margin-top:1px;">Day service</div>
-            </div>
-          </div>
-          <div style="position:absolute;bottom:12px;left:12px;right:12px;border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;">
-            <div style="font-size:5px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;">WHAT WE DO</div>
-          </div>
-        </div>
-        <div class="portfolio-overlay">
-          <div class="portfolio-tag">Web Design</div>
-          <div class="portfolio-title">Ron's Auto & Repair</div>
-        </div>
-      </div>
-
-      <!-- 4: Bella's Boutique - keep original -->
-      <div class="portfolio-card reveal">
-        <div class="portfolio-bg" style="position:absolute;inset:0;">
-          <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&q=80&fit=crop" alt="Boutique Fashion" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);"/>
-        </div>
-        <div class="portfolio-overlay">
-          <div class="portfolio-tag">Fashion & Retail</div>
-          <div class="portfolio-title">Bella's Boutique</div>
-        </div>
-      </div>
-
-      <!-- 5: Flux Streetwear - keep original -->
-      <div class="portfolio-card reveal reveal-delay-1">
-        <div class="portfolio-bg" style="position:absolute;inset:0;">
-          <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=600&q=80&fit=crop" alt="Streetwear" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);"/>
-        </div>
-        <div class="portfolio-overlay">
-          <div class="portfolio-tag">Streetwear</div>
-          <div class="portfolio-title">Flux Streetwear</div>
-        </div>
-      </div>
-
-      <!-- 6: Neon Nails - real image -->
-      <div class="portfolio-card reveal reveal-delay-2">
-        <div class="portfolio-bg" style="position:absolute;inset:0;">
-          <img src="./neon-nails.png" alt="Neon Nails Studio" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);"/>
-        </div>
-        <div class="portfolio-overlay">
-          <div class="portfolio-tag">Product Visuals</div>
-          <div class="portfolio-title">Neon Nails Studio</div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -2288,6 +2485,98 @@ function hideLegalPage() {
   document.getElementById('legal-overlay').style.display = 'none';
   document.body.style.overflow = '';
 }
+
+// ── CASE STUDIES ──
+const cases = {
+  elan: {
+    title: 'Élan Studio', industry: 'Luxury Beauty Salon', url: 'motionlee.co.uk/work/elan-studio',
+    intro: 'A full brand identity and digital presence for a luxury beauty salon that needed to match the premium experience they deliver in person. Clean, minimal, and beautifully feminine — without being generic.',
+    services: 'Brand Identity<br>Website Design<br>UI/UX<br>Responsive Design', timeline: '3 Weeks', platform: 'WordPress<br>Elementor<br>WooCommerce',
+    challenge: 'The client had an exceptional in-person experience but a digital presence that didn\'t reflect their premium positioning. Their existing website was generic, slow, and failing to convert visitors into bookings.',
+    solution: 'We built a brand-new identity system — typography, colour palette, and visual language — then translated it into a fast, mobile-first website with seamless online booking integration. Delivered in under 3 weeks.',
+    img: './Elan_studio.png',
+    img2: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1200&q=80&fit=crop',
+  },
+  north: {
+    title: 'North & Co.', industry: 'Premium Barbershop', url: 'motionlee.co.uk/work/north-and-co',
+    intro: 'A bold, masculine identity for a premium barbershop that wanted to stand apart from every other barbershop website. Dark tones, strong typography, and an online booking system that actually converts.',
+    services: 'Brand Identity<br>Booking Experience<br>Website Design<br>Photography Direction', timeline: '2 Weeks', platform: 'Netlify<br>Custom HTML/CSS<br>Calendly Integration',
+    challenge: 'Every barbershop website looks the same — black background, scissors icon, basic booking form. North & Co. wanted something that felt premium without feeling pretentious.',
+    solution: 'We stripped it back to the essentials: a powerful hero, clear service menu, instant booking, and a visual language that felt like the shop itself. Fast, sharp, and built to convert walk-ins from Google.',
+    img: './NORTH___CO_.png',
+    img2: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80&fit=crop',
+  },
+  apex: {
+    title: 'Apex Detail', industry: 'Premium Automotive Detailing', url: 'motionlee.co.uk/work/apex-detail',
+    intro: 'A high-performance brand and website for a premium car detailing business targeting enthusiasts and prestige vehicle owners. Built to communicate quality, precision, and trust.',
+    services: 'Brand Identity<br>Service Website<br>Responsive Design<br>SEO Setup', timeline: '2 Weeks', platform: 'Netlify<br>Custom HTML/CSS<br>Google Analytics',
+    challenge: 'The detailing market is crowded with cheap-looking websites that undercut the premium positioning most skilled detailers deserve. Apex needed a site that matched the quality of their work.',
+    solution: 'Dark, cinematic design with high-impact imagery, a clear service breakdown with pricing, and a quote request form that pre-qualifies customers before they even make contact.',
+    img: './APEX_DETAIL.png',
+    img2: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1200&q=80&fit=crop',
+  },
+  ironoak: {
+    title: 'Iron Oak Brewing Co.', industry: 'Craft Brewery & Taproom', url: 'motionlee.co.uk/work/iron-oak',
+    intro: 'A complete brand identity, e-commerce platform, and packaging design system for a craft brewery launching their first range of canned ales. Rustic meets modern.',
+    services: 'Brand Identity<br>E-commerce<br>Packaging Design<br>Responsive Website', timeline: '4 Weeks', platform: 'Shopify<br>Custom Theme<br>Stripe Payments',
+    challenge: 'Iron Oak were launching into a competitive craft beer market with no brand identity, no packaging, and no online presence. They needed everything from scratch — fast.',
+    solution: 'We built a complete brand world: logo, colour system, typography, and can label designs for their first four ales — then launched a Shopify store for direct-to-consumer sales.',
+    img: './Iron_oak_brewing_co.png',
+    img2: 'https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=1200&q=80&fit=crop',
+  },
+  haven: {
+    title: 'Haven & Hart', industry: 'Luxury Real Estate', url: 'motionlee.co.uk/work/haven-hart',
+    intro: 'A premium property platform for a luxury real estate agency. Sophisticated, trust-building, and designed to showcase high-value properties in a way that reflects their price point.',
+    services: 'Brand Identity<br>Property Platform<br>UX Design<br>Responsive Design', timeline: '5 Weeks', platform: 'WordPress<br>Custom Theme<br>MLS Integration',
+    challenge: 'The agency was competing with national brands for high-net-worth clients but their website looked like it was built in 2015. Every touchpoint needed to scream quality and trustworthiness.',
+    solution: 'We designed a minimal, editorial-style property platform with full-bleed photography, immersive property pages, and a brand identity that positioned Haven & Hart as the premium choice in their market.',
+    img: './Haven___heart.png',
+    img2: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200&q=80&fit=crop',
+  },
+  ember: {
+    title: 'Ember & Ash', industry: 'Modern British Kitchen', url: 'motionlee.co.uk/work/ember-and-ash',
+    intro: 'A warm, atmospheric brand and reservation experience for a modern British restaurant. Every design decision was made to make guests feel the food before they\'ve even booked a table.',
+    services: 'Brand Identity<br>Restaurant Experience<br>Reservation System<br>Menu Design', timeline: '3 Weeks', platform: 'Netlify<br>OpenTable Integration<br>Custom CSS',
+    challenge: 'Restaurant websites are either too minimal or too cluttered. Ember & Ash needed something atmospheric, warm, and instantly bookable.',
+    solution: 'We created a full sensory brand experience — warm photography direction, editorial typography, an animated hero that evokes fire and atmosphere, and a frictionless reservation flow that doubled their online booking rate.',
+    img: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=1200&q=85&fit=crop',
+    img2: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80&fit=crop',
+  },
+};
+
+function openCase(id) {
+  const c = cases[id];
+  if (!c) return;
+  document.getElementById('case-url').textContent = c.url;
+  document.getElementById('case-title').textContent = c.title;
+  document.getElementById('case-industry-top').textContent = c.industry;
+  document.getElementById('case-industry').textContent = c.industry;
+  document.getElementById('case-intro').textContent = c.intro;
+  document.getElementById('case-services').innerHTML = c.services;
+  document.getElementById('case-timeline').textContent = c.timeline;
+  document.getElementById('case-platform').innerHTML = c.platform;
+  document.getElementById('case-challenge').textContent = c.challenge;
+  document.getElementById('case-solution').textContent = c.solution;
+  document.getElementById('case-img').src = c.img;
+  document.getElementById('case-img').alt = c.title;
+  document.getElementById('case-img2').src = c.img2;
+  document.getElementById('case-img2').alt = c.title + ' detail';
+  const overlay = document.getElementById('case-overlay');
+  overlay.style.display = 'block';
+  overlay.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  window.history.pushState({}, '', '/' + c.url.replace('motionlee.co.uk', ''));
+}
+
+function closeCase() {
+  document.getElementById('case-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+  window.history.pushState({}, '', '/');
+}
+
+window.addEventListener('popstate', () => {
+  if (document.getElementById('case-overlay').style.display === 'block') closeCase();
+});
 </script>
 </body>
 </html>
