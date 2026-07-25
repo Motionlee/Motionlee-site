@@ -1096,11 +1096,12 @@ nav.scrolled {
 .work-label {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 20px 24px 22px;
-  background: linear-gradient(to top, rgba(10,11,14,0.88) 0%, transparent 100%);
+  padding: 60px 24px 22px;
+  background: linear-gradient(to top, rgba(10,11,14,0.95) 0%, transparent 100%);
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .work-label-left {}
@@ -1153,12 +1154,13 @@ nav.scrolled {
   color: var(--ink);
   font-size: 11px;
   font-weight: 700;
-  padding: 7px 14px;
+  padding: 8px 14px;
   border-radius: 20px;
   white-space: nowrap;
   flex-shrink: 0;
+  align-self: flex-end;
   opacity: 0;
-  transform: translateY(6px);
+  transform: translateY(4px);
   transition: opacity 0.25s, transform 0.25s;
 }
 
@@ -1570,7 +1572,7 @@ footer {
 
       <!-- ÉLAN STUDIO — large left -->
       <div class="work-card w-c1 reveal" onclick="openCase('elan')">
-        <img src="./Elan_studio.png" alt="Élan Studio"/>
+        <img src="./Elan_studio.png" alt="Élan Studio" style="object-position:left top;"/>
         <div class="work-label">
           <div class="work-label-left">
             <div class="work-label-num">PROJECT 01</div>
@@ -1656,19 +1658,19 @@ footer {
 
 <!-- ── CASE STUDY OVERLAY ── -->
 <div id="case-overlay" style="display:none;position:fixed;inset:0;background:#0A0B0E;z-index:500;overflow-y:auto;">
+
+  <!-- Full bleed hero image at very top -->
+  <div id="case-hero-img" style="width:100%;height:520px;position:relative;overflow:hidden;">
+    <img id="case-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top center;"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,14,1) 0%,rgba(10,11,14,0.2) 50%,transparent 100%);"></div>
+    <!-- Back bar overlaid on image -->
+    <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:24px 40px;z-index:10;">
+      <button onclick="closeCase()" style="display:flex;align-items:center;gap:8px;background:rgba(10,11,14,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;" onmouseover="this.style.background='rgba(10,11,14,0.9)'" onmouseout="this.style.background='rgba(10,11,14,0.7)'">← Back to Work</button>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35);letter-spacing:1px;background:rgba(10,11,14,0.6);backdrop-filter:blur(12px);padding:7px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);" id="case-url">motionlee.co.uk/work/elan-studio</div>
+    </div>
+  </div>
+
   <div style="max-width:860px;margin:0 auto;padding:0 24px 100px;">
-
-    <!-- Back bar -->
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:56px;position:sticky;top:0;background:#0A0B0E;z-index:10;">
-      <button onclick="closeCase()" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.09)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">← Back to Work</button>
-      <div style="font-size:12px;color:rgba(255,255,255,0.2);letter-spacing:1px;" id="case-url">motionlee.co.uk/work/elan-studio</div>
-    </div>
-
-    <!-- Hero image -->
-    <div id="case-hero-img" style="width:100%;height:420px;border-radius:20px;overflow:hidden;margin-bottom:56px;position:relative;">
-      <img id="case-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;"/>
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,14,0.6) 0%,transparent 60%);"></div>
-    </div>
 
     <!-- Header -->
     <div style="margin-bottom:56px;">
