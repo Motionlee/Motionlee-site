@@ -1292,7 +1292,92 @@ nav.scrolled {
   .exhibit-item { cursor: pointer; }
 }
 
-.reveal {
+/* ━━━━ CARD STACK 3D ━━━━ */
+#cs-root {
+  perspective: 1200px;
+}
+
+.cs-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: grab;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 8px 24px rgba(0,0,0,0.4);
+  transition: transform 0.55s cubic-bezier(0.23,1,0.32,1),
+              opacity 0.45s ease,
+              box-shadow 0.3s ease;
+}
+
+.cs-card:active { cursor: grabbing; }
+
+.cs-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cs-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(0,0,0,0.5) 100%
+  );
+  pointer-events: none;
+}
+
+/* Scroll fade wrapper */
+#cs-wrapper {
+  transition: opacity 0.1s linear;
+}
+
+#cs-prev:hover, #cs-next:hover {
+  background: rgba(255,255,255,0.12) !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,0.3) !important;
+}
+
+.cs-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: none; cursor: pointer; padding: 0;
+  transition: all 0.25s;
+}
+.cs-dot.active { background: var(--lime); width: 20px; border-radius: 3px; }
+
+.cs-tag {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 3px 10px; border-radius: 20px;
+}
+
+#cs-view-btn:hover {
+  box-shadow: 0 8px 28px rgba(214,255,63,0.35);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  #cs-root { height: 380px !important; }
+  #cs-prev { left: -8px !important; }
+  #cs-next { right: -8px !important; }
+}
+
+@media (max-width: 600px) {
+  #cs-root { height: 280px !important; }
+  #cs-name { font-size: 20px !important; }
+}
+
+/* ━━━━ SCROLL REVEAL ━━━━ */
+
+/* ━━━━ SCROLL REVEAL ━━━━ */
   opacity: 0; transform: translateY(32px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
@@ -1667,117 +1752,50 @@ footer {
   </div>
 </section>
 
-<!-- FEATURED PROJECTS — EXHIBITION -->
-<section id="portfolio" style="padding:0;background:var(--ink);">
+<!-- FEATURED PROJECTS — CARD STACK -->
+<section id="portfolio" style="padding:100px 0 140px;background:var(--ink);">
+  <div style="max-width:1100px;margin:0 auto;padding:0 48px;">
 
-  <!-- Section header -->
-  <div style="max-width:1100px;margin:0 auto;padding:120px 48px 80px;">
-    <div class="eyebrow reveal">Featured Projects</div>
-    <h2 class="section-title reveal reveal-delay-1" style="margin-top:16px;">Designed to inspire.<br><em>Built to convert.</em></h2>
-  </div>
-
-  <!-- ÉLAN STUDIO -->
-  <div class="exhibit-item reveal" onclick="openCase('elan')" data-cursor="VIEW PROJECT">
-    <div class="exhibit-img-wrap">
-      <img class="exhibit-img" src="./exhibit_elan.png" alt="Élan Studio" loading="lazy"/>
-      <div class="exhibit-overlay"></div>
-      <div class="exhibit-cursor" id="cursor-elan">VIEW PROJECT</div>
+    <!-- Header -->
+    <div class="eyebrow reveal" style="margin-bottom:16px;">Featured Projects</div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:80px;flex-wrap:wrap;gap:24px;">
+      <h2 class="section-title reveal reveal-delay-1">Designed to inspire.<br><em>Built to convert.</em></h2>
+      <p class="section-sub reveal reveal-delay-2" style="max-width:280px;">Drag, click or use arrows to explore our work.</p>
     </div>
-    <div class="exhibit-meta">
-      <div class="exhibit-index">01</div>
-      <div class="exhibit-info">
-        <div class="exhibit-name">Élan Studio</div>
-        <div class="exhibit-type">Luxury Beauty Salon — Brand Identity · UI/UX · Responsive Website</div>
+
+    <!-- Card stack wrapper — fades as you scroll past -->
+    <div id="cs-wrapper" style="position:relative;">
+
+      <!-- Stack -->
+      <div id="cs-root" style="position:relative;height:520px;margin:0 auto;max-width:760px;">
+        <!-- Cards injected by JS -->
       </div>
-      <div class="exhibit-arrow">↗</div>
-    </div>
-  </div>
 
-  <!-- NORTH & CO. -->
-  <div class="exhibit-item reveal" onclick="openCase('north')" data-cursor="VIEW PROJECT">
-    <div class="exhibit-img-wrap">
-      <img class="exhibit-img" src="./exhibit_north.png" alt="North & Co." loading="lazy"/>
-      <div class="exhibit-overlay"></div>
-      <div class="exhibit-cursor" id="cursor-north">VIEW PROJECT</div>
-    </div>
-    <div class="exhibit-meta">
-      <div class="exhibit-index">02</div>
-      <div class="exhibit-info">
-        <div class="exhibit-name">North & Co.</div>
-        <div class="exhibit-type">Premium Barbershop — Brand Identity · Booking Experience · Website</div>
+      <!-- Prev / Next -->
+      <button id="cs-prev" aria-label="Previous" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:200;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(8px);">‹</button>
+      <button id="cs-next" aria-label="Next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:200;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(8px);">›</button>
+
+      <!-- Dots -->
+      <div id="cs-dots" style="display:flex;justify-content:center;gap:8px;margin-top:32px;"></div>
+
+      <!-- Info bar -->
+      <div style="margin-top:36px;display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:16px;">
+        <div>
+          <div id="cs-type" style="font-size:10px;color:var(--lime);letter-spacing:0.18em;text-transform:uppercase;font-weight:600;margin-bottom:8px;"></div>
+          <div id="cs-name" style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-0.5px;line-height:1;margin-bottom:10px;"></div>
+          <div id="cs-tags" style="display:flex;gap:7px;flex-wrap:wrap;"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:20px;flex-shrink:0;">
+          <div style="text-align:right;">
+            <span id="cs-cur" style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#fff;letter-spacing:-1px;">1</span>
+            <span style="font-size:14px;color:rgba(255,255,255,0.2);"> / 6</span>
+          </div>
+          <button id="cs-view-btn" style="background:var(--lime);color:var(--ink);font-size:13px;font-weight:700;padding:13px 26px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;white-space:nowrap;">View Project →</button>
+        </div>
       </div>
-      <div class="exhibit-arrow">↗</div>
     </div>
-  </div>
 
-  <!-- APEX DETAIL -->
-  <div class="exhibit-item reveal" onclick="openCase('apex')" data-cursor="VIEW PROJECT">
-    <div class="exhibit-img-wrap">
-      <img class="exhibit-img" src="./exhibit_apex.png" alt="Apex Detail" loading="lazy"/>
-      <div class="exhibit-overlay"></div>
-      <div class="exhibit-cursor" id="cursor-apex">VIEW PROJECT</div>
-    </div>
-    <div class="exhibit-meta">
-      <div class="exhibit-index">03</div>
-      <div class="exhibit-info">
-        <div class="exhibit-name">Apex Detail</div>
-        <div class="exhibit-type">Premium Automotive — Brand Identity · Service Website · Responsive Design</div>
-      </div>
-      <div class="exhibit-arrow">↗</div>
-    </div>
   </div>
-
-  <!-- IRON OAK -->
-  <div class="exhibit-item reveal" onclick="openCase('ironoak')" data-cursor="VIEW PROJECT">
-    <div class="exhibit-img-wrap">
-      <img class="exhibit-img" src="./exhibit_ironoak.png" alt="Iron Oak Brewing Co." loading="lazy"/>
-      <div class="exhibit-overlay"></div>
-      <div class="exhibit-cursor" id="cursor-ironoak">VIEW PROJECT</div>
-    </div>
-    <div class="exhibit-meta">
-      <div class="exhibit-index">04</div>
-      <div class="exhibit-info">
-        <div class="exhibit-name">Iron Oak Brewing Co.</div>
-        <div class="exhibit-type">Craft Brewery & Taproom — Brand Identity · E-commerce · Packaging Design</div>
-      </div>
-      <div class="exhibit-arrow">↗</div>
-    </div>
-  </div>
-
-  <!-- HAVEN & HART -->
-  <div class="exhibit-item reveal" onclick="openCase('haven')" data-cursor="VIEW PROJECT">
-    <div class="exhibit-img-wrap">
-      <img class="exhibit-img" src="./exhibit_haven.png" alt="Haven & Hart" loading="lazy"/>
-      <div class="exhibit-overlay"></div>
-      <div class="exhibit-cursor" id="cursor-haven">VIEW PROJECT</div>
-    </div>
-    <div class="exhibit-meta">
-      <div class="exhibit-index">05</div>
-      <div class="exhibit-info">
-        <div class="exhibit-name">Haven & Hart</div>
-        <div class="exhibit-type">Luxury Real Estate — Brand Identity · Property Platform · UX Design</div>
-      </div>
-      <div class="exhibit-arrow">↗</div>
-    </div>
-  </div>
-
-  <!-- EMBER & ASH -->
-  <div class="exhibit-item reveal" onclick="openCase('ember')" data-cursor="VIEW PROJECT">
-    <div class="exhibit-img-wrap">
-      <img class="exhibit-img" src="./exhibit_ember.png" alt="Ember & Ash" loading="lazy"/>
-      <div class="exhibit-overlay"></div>
-      <div class="exhibit-cursor" id="cursor-ember">VIEW PROJECT</div>
-    </div>
-    <div class="exhibit-meta">
-      <div class="exhibit-index">06</div>
-      <div class="exhibit-info">
-        <div class="exhibit-name">Ember & Ash</div>
-        <div class="exhibit-type">Modern British Kitchen — Brand Identity · Restaurant Experience · Reservation System</div>
-      </div>
-      <div class="exhibit-arrow">↗</div>
-    </div>
-  </div>
-
 </section>
 
 <!-- CASE STUDY OVERLAY -->
@@ -2389,7 +2407,385 @@ window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
 });
 
-// ── EXHIBITION CURSOR ──
+// ━━━━ CARD STACK ━━━━
+(function() {
+  const projects = [
+    { id:'elan',    name:'Élan Studio',          type:'Luxury Beauty Salon',        img:'./exhibit_elan.png',    tags:['Brand Identity','UI/UX','Website'] },
+    { id:'north',   name:'North & Co.',           type:'Premium Barbershop',         img:'./exhibit_north.png',   tags:['Brand Identity','Booking','Website'] },
+    { id:'apex',    name:'Apex Detail',           type:'Premium Automotive',         img:'./exhibit_apex.png',    tags:['Brand Identity','Service Website'] },
+    { id:'ironoak', name:'Iron Oak Brewing Co.',  type:'Craft Brewery & Taproom',    img:'./exhibit_ironoak.png', tags:['Brand Identity','E-commerce','Packaging'] },
+    { id:'haven',   name:'Haven & Hart',          type:'Luxury Real Estate',         img:'./exhibit_haven.png',   tags:['Property Platform','UX Design'] },
+    { id:'ember',   name:'Ember & Ash',           type:'Modern British Kitchen',     img:'./exhibit_ember.png',   tags:['Brand Identity','Restaurant','Reservations'] },
+  ];
+
+  const root   = document.getElementById('card-stack-root');
+  const dotsEl = document.getElementById('cs-dots');
+  const prevBtn = document.getElementById('cs-prev');
+  const nextBtn = document.getElementById('cs-next');
+  const openBtn = document.getElementById('cs-open-btn');
+  const counter = document.getElementById('cs-counter');
+  const nameEl  = document.getElementById('cs-proj-name');
+  const typeEl  = document.getElementById('cs-proj-type');
+  const tagsEl  = document.getElementById('cs-proj-tags');
+
+  let current = 0;
+  let dragStartX = 0, dragStartY = 0, dragging = false;
+
+  // Build cards (all stacked, top card is current)
+  const cards = projects.map((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'cs-card';
+    card.innerHTML = `<img src="${p.img}" alt="${p.name}" loading="lazy"/><div class="cs-card-shine"></div>`;
+    root.appendChild(card);
+
+    // Drag to next/prev
+    card.addEventListener('mousedown', e => { dragStartX = e.clientX; dragStartY = e.clientY; dragging = true; });
+    card.addEventListener('touchstart', e => { dragStartX = e.touches[0].clientX; dragStartY = e.touches[0].clientY; dragging = true; }, { passive: true });
+
+    card.addEventListener('mouseup', e => {
+      if (!dragging) return; dragging = false;
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      if (Math.abs(dy) > 40 && dy < 0) next();
+      else if (Math.abs(dy) > 40 && dy > 0) prev();
+      else if (Math.abs(dx) > 40 && dx < 0) next();
+      else if (Math.abs(dx) > 40 && dx > 0) prev();
+    });
+
+    card.addEventListener('touchend', e => {
+      if (!dragging) return; dragging = false;
+      const dx = e.changedTouches[0].clientX - dragStartX;
+      const dy = e.changedTouches[0].clientY - dragStartY;
+      if (Math.abs(dy) > 40 && dy < 0) next();
+      else if (Math.abs(dy) > 40 && dy > 0) prev();
+      else if (Math.abs(dx) > 40 && dx < 0) next();
+      else if (Math.abs(dx) > 40 && dx > 0) prev();
+    });
+
+    return card;
+  });
+
+  // Build dots
+  projects.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'cs-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to project ' + (i+1));
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function render() {
+    const n = projects.length;
+    cards.forEach((card, i) => {
+      // Relative position to current
+      let rel = (i - current + n) % n;
+      // We show current (0), next behind it (1), next (2), etc
+      // But cards "in front" are invisible
+      if (rel === 0) {
+        // Top card — front
+        card.style.zIndex = n;
+        card.style.transform = 'translateX(-50%) translateY(0px) scale(1) rotate(0deg)';
+        card.style.opacity = '1';
+        card.style.pointerEvents = 'auto';
+        card.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s';
+      } else if (rel <= 4) {
+        // Behind cards, stacked with offset
+        const depth = rel;
+        const yOff  = -depth * 14;
+        const scale = 1 - depth * 0.05;
+        const rot   = depth % 2 === 0 ? depth * 1.2 : -depth * 1.2;
+        card.style.zIndex = n - depth;
+        card.style.transform = `translateX(-50%) translateY(${yOff}px) scale(${scale}) rotate(${rot}deg)`;
+        card.style.opacity = depth > 3 ? '0' : (1 - depth * 0.18).toString();
+        card.style.pointerEvents = 'none';
+        card.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s';
+      } else {
+        card.style.opacity = '0';
+        card.style.zIndex = '0';
+        card.style.pointerEvents = 'none';
+        card.style.transition = 'none';
+      }
+    });
+
+    // Update info
+    const p = projects[current];
+    nameEl.textContent = p.name;
+    typeEl.textContent = p.type;
+    tagsEl.innerHTML = p.tags.map(t => `<span class="cs-tag">${t}</span>`).join('');
+    counter.innerHTML = `${current + 1} <span style="color:rgba(255,255,255,0.2);font-size:20px;">/ ${projects.length}</span>`;
+
+    // Update dots
+    dotsEl.querySelectorAll('.cs-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function next() {
+    // Animate top card flying away to the bottom of stack
+    const topCard = cards[current];
+    topCard.style.transition = 'transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s';
+    topCard.style.transform = 'translateX(-50%) translateY(60px) scale(0.85) rotate(6deg)';
+    topCard.style.opacity = '0';
+    setTimeout(() => {
+      current = (current + 1) % projects.length;
+      render();
+    }, 200);
+  }
+
+  function prev() {
+    current = (current - 1 + projects.length) % projects.length;
+    // Start top card from behind and bring forward
+    const topCard = cards[current];
+    topCard.style.transition = 'none';
+    topCard.style.transform = 'translateX(-50%) translateY(60px) scale(0.85) rotate(-6deg)';
+    topCard.style.opacity = '0';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        render();
+      });
+    });
+  }
+
+  function goTo(i) {
+    if (i === current) return;
+    current = i;
+    render();
+  }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+  openBtn.addEventListener('click', () => openCase(projects[current].id));
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    const inPortfolio = document.getElementById('portfolio');
+    if (!inPortfolio) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prev();
+  });
+
+  render();
+})();
+
+// ━━━━ CARD STACK 3D FAN-OUT ━━━━
+(function() {
+  const projects = [
+    { id:'elan',    name:'Élan Studio',          type:'Luxury Beauty Salon',      img:'./exhibit_elan.png',    tags:['Brand Identity','UI/UX','Website'] },
+    { id:'north',   name:'North & Co.',           type:'Premium Barbershop',       img:'./exhibit_north.png',   tags:['Brand Identity','Booking','Website'] },
+    { id:'apex',    name:'Apex Detail',           type:'Premium Automotive',       img:'./exhibit_apex.png',    tags:['Brand Identity','Service Website'] },
+    { id:'ironoak', name:'Iron Oak Brewing Co.',  type:'Craft Brewery & Taproom',  img:'./exhibit_ironoak.png', tags:['E-commerce','Packaging','Branding'] },
+    { id:'haven',   name:'Haven & Hart',          type:'Luxury Real Estate',       img:'./exhibit_haven.png',   tags:['Property Platform','UX Design'] },
+    { id:'ember',   name:'Ember & Ash',           type:'Modern British Kitchen',   img:'./exhibit_ember.png',   tags:['Brand Identity','Reservations'] },
+  ];
+
+  const root    = document.getElementById('cs-root');
+  const dotsEl  = document.getElementById('cs-dots');
+  const prevBtn = document.getElementById('cs-prev');
+  const nextBtn = document.getElementById('cs-next');
+  const viewBtn = document.getElementById('cs-view-btn');
+  const nameEl  = document.getElementById('cs-name');
+  const typeEl  = document.getElementById('cs-type');
+  const tagsEl  = document.getElementById('cs-tags');
+  const curEl   = document.getElementById('cs-cur');
+  const wrapper = document.getElementById('cs-wrapper');
+
+  let current = 0;
+  let isAnimating = false;
+  let dragStartX = 0, dragStartY = 0, isDragging = false;
+
+  // Build all cards
+  const cards = projects.map((p, i) => {
+    const el = document.createElement('div');
+    el.className = 'cs-card';
+    el.innerHTML = `
+      <img src="${p.img}" alt="${p.name}" loading="${i < 3 ? 'eager' : 'lazy'}"/>
+      <div class="cs-card-overlay"></div>
+    `;
+    root.appendChild(el);
+
+    // Drag support
+    el.addEventListener('mousedown', e => { dragStartX = e.clientX; dragStartY = e.clientY; isDragging = true; e.preventDefault(); });
+    el.addEventListener('touchstart', e => { dragStartX = e.touches[0].clientX; dragStartY = e.touches[0].clientY; isDragging = true; }, { passive: true });
+
+    el.addEventListener('mouseup', e => {
+      if (!isDragging) return; isDragging = false;
+      const dx = e.clientX - dragStartX;
+      const dy = e.clientY - dragStartY;
+      if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
+        if (dx < -30 || dy < -30) goNext();
+        else goPrev();
+      }
+    });
+
+    el.addEventListener('touchend', e => {
+      if (!isDragging) return; isDragging = false;
+      const dx = e.changedTouches[0].clientX - dragStartX;
+      const dy = e.changedTouches[0].clientY - dragStartY;
+      if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
+        if (dx < -30 || dy < -30) goNext();
+        else goPrev();
+      }
+    });
+
+    return el;
+  });
+
+  // Build dots
+  projects.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'cs-dot';
+    d.setAttribute('aria-label', 'Project ' + (i+1));
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  // ── The fan-out layout ──
+  // Each card behind the active one fans out with rotation + Y offset + scale
+  // Inspired by the 21st.dev ruixenui card-stack with 3D perspective
+  function getTransform(relPos) {
+    const n = projects.length;
+    // relPos: 0 = front (active), 1 = first behind, 2 = second behind, etc.
+    // Negative would be "ahead" (cycling)
+
+    if (relPos === 0) {
+      return { tx: 0, ty: 0, tz: 0, rotY: 0, rotZ: 0, scale: 1, opacity: 1, zIndex: 100 };
+    }
+
+    // Fan behind: cards stack up and slightly behind
+    // Alternate left/right rotation for fan effect
+    const side = relPos % 2 === 1 ? 1 : -1;
+    const depth = relPos;
+
+    return {
+      tx: 0,
+      ty: -depth * 18,        // stack up vertically
+      tz: -depth * 40,        // push back in Z
+      rotZ: side * depth * 3, // fan rotation
+      rotY: 0,
+      scale: 1 - depth * 0.04,
+      opacity: depth > 4 ? 0 : Math.max(0, 1 - depth * 0.2),
+      zIndex: 100 - depth,
+    };
+  }
+
+  function render(animatingOut = -1) {
+    const n = projects.length;
+
+    cards.forEach((card, i) => {
+      let rel = ((i - current) % n + n) % n;
+      // Keep only showing up to 5 behind
+      if (rel > 5) rel = rel - n; // negative means "ahead" — hide those
+
+      if (rel < 0) {
+        // Cards that are "ahead" — hidden
+        card.style.opacity = '0';
+        card.style.zIndex = '0';
+        card.style.pointerEvents = 'none';
+        card.style.transform = 'translate3d(0, 60px, -200px) scale(0.8)';
+        return;
+      }
+
+      const t = getTransform(rel);
+      card.style.zIndex = String(t.zIndex);
+      card.style.opacity = String(t.opacity);
+      card.style.pointerEvents = rel === 0 ? 'auto' : 'none';
+      card.style.transform = `translate3d(${t.tx}px, ${t.ty}px, ${t.tz}px) rotateZ(${t.rotZ}deg) scale(${t.scale})`;
+
+      if (i === animatingOut) {
+        // Flying-away card
+        card.style.transition = 'transform 0.5s cubic-bezier(0.23,1,0.32,1), opacity 0.35s ease';
+        card.style.transform = 'translate3d(0, 80px, -300px) rotateZ(12deg) scale(0.7)';
+        card.style.opacity = '0';
+      }
+    });
+
+    // Update info
+    const p = projects[current];
+    nameEl.textContent = p.name;
+    typeEl.textContent = p.type;
+    tagsEl.innerHTML = p.tags.map(t => `<span class="cs-tag">${t}</span>`).join('');
+    curEl.textContent = current + 1;
+
+    dotsEl.querySelectorAll('.cs-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function goNext() {
+    if (isAnimating) return;
+    isAnimating = true;
+    const prev = current;
+    current = (current + 1) % projects.length;
+    render(prev);
+    setTimeout(() => {
+      render();
+      isAnimating = false;
+    }, 400);
+  }
+
+  function goPrev() {
+    if (isAnimating) return;
+    isAnimating = true;
+    current = (current - 1 + projects.length) % projects.length;
+    // Briefly show incoming card from behind then bring forward
+    cards[current].style.transition = 'none';
+    cards[current].style.transform = 'translate3d(0, 80px, -300px) rotateZ(-12deg) scale(0.7)';
+    cards[current].style.opacity = '0';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        render();
+        isAnimating = false;
+      });
+    });
+  }
+
+  function goTo(i) {
+    if (i === current || isAnimating) return;
+    current = i;
+    render();
+  }
+
+  prevBtn.onclick = goPrev;
+  nextBtn.onclick = goNext;
+  viewBtn.onclick = () => openCase(projects[current].id);
+
+  // Keyboard
+  window.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goNext();
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goPrev();
+  });
+
+  // ── SCROLL FADE OUT ──
+  // As user scrolls past the portfolio section, it fades out
+  const section = document.getElementById('portfolio');
+  function onScroll() {
+    if (!section || !wrapper) return;
+    const rect = section.getBoundingClientRect();
+    const sectionH = section.offsetHeight;
+    const viewH = window.innerHeight;
+
+    // Start fading when section top goes above 30% of viewport
+    // Fully faded when section is half gone
+    const scrolled = -rect.top;
+    const fadeStart = sectionH * 0.3;
+    const fadeEnd   = sectionH * 0.65;
+
+    if (scrolled <= fadeStart) {
+      wrapper.style.opacity = '1';
+    } else if (scrolled >= fadeEnd) {
+      wrapper.style.opacity = '0';
+    } else {
+      const t = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+      wrapper.style.opacity = String(1 - t);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  render();
+})();
+
+// ── EXHIBITION CURSOR (no longer used) ──
 (function() {
   const items = document.querySelectorAll('.exhibit-item');
   items.forEach(item => {
