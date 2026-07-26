@@ -183,7 +183,13 @@ nav.scrolled {
   66% { transform: translate(-20px, 30px) scale(0.95); }
 }
 
-.hero-content { position: relative; z-index: 2; }
+.hero-content {
+  position: relative; z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
 .hero-pill {
   display: inline-flex; align-items: center; gap: 8px;
@@ -210,11 +216,12 @@ nav.scrolled {
 
 .hero-title {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(48px, 8vw, 96px);
+  font-size: clamp(52px, 9vw, 112px);
   font-weight: 800; color: var(--white);
-  line-height: 1.02; letter-spacing: -2px;
-  margin-bottom: 28px;
+  line-height: 1.0; letter-spacing: -3px;
+  margin-bottom: 0;
   animation: fadeUp 0.8s 0.1s ease both;
+  text-align: center;
 }
 
 .hero-title em {
@@ -481,22 +488,40 @@ nav.scrolled {
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 20px; padding: 36px;
   background: #181818;
-  transition: all 0.3s;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
   position: relative; overflow: hidden;
 }
 
+/* Radial glow that sweeps in from bottom-left on hover — same as service cards */
 .price-card::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(67,56,202,0.1), transparent 60%);
+  background: radial-gradient(circle at 0% 100%, rgba(67,56,202,0.14), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.4s;
   pointer-events: none;
 }
 
+/* Top-edge indigo line that slides in on hover — same as service cards */
+.price-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--indigo2), transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s;
+}
+
 .price-card:hover {
+  background: #1a1b22;
   border-color: rgba(67,56,202,0.3);
   transform: translateY(-4px);
   box-shadow: 0 24px 60px rgba(0,0,0,0.3);
 }
+
+.price-card:hover::before { opacity: 1; }
+.price-card:hover::after { transform: scaleX(1); }
 
 .price-card.featured {
   background: var(--indigo);
@@ -505,7 +530,11 @@ nav.scrolled {
 }
 
 .price-card.featured::before {
-  background: radial-gradient(circle at 50% 0%, rgba(214,255,63,0.12), transparent 60%);
+  background: radial-gradient(circle at 0% 100%, rgba(214,255,63,0.1), transparent 65%);
+}
+
+.price-card.featured::after {
+  background: linear-gradient(90deg, transparent, rgba(214,255,63,0.5), transparent);
 }
 
 .price-card.featured:hover {
@@ -689,7 +718,17 @@ nav.scrolled {
   position: relative;
   background: #181818;
   border: 1px solid rgba(255,255,255,0.06);
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
 }
+.about-visual::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--indigo2), transparent);
+  transform: scaleX(0); transition: transform 0.4s;
+  z-index: 2;
+}
+.about-visual:hover { border-color: rgba(67,56,202,0.35); box-shadow: 0 20px 60px rgba(0,0,0,0.4); transform: translateY(-2px); }
+.about-visual:hover::after { transform: scaleX(1); }
 
 .about-map {
   position: absolute; inset: 0;
@@ -766,10 +805,24 @@ nav.scrolled {
   background: #181818;
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 14px; text-align: center;
-  transition: border-color 0.2s;
+  position: relative; overflow: hidden;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
 }
-
-.about-stat:hover { border-color: rgba(67,56,202,0.3); }
+.about-stat::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 0% 100%, rgba(67,56,202,0.12), transparent 65%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.about-stat::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--indigo2), transparent);
+  transform: scaleX(0); transition: transform 0.35s;
+}
+.about-stat:hover { border-color: rgba(67,56,202,0.35); background: #1a1b22; transform: translateY(-2px); }
+.about-stat:hover::before { opacity: 1; }
+.about-stat:hover::after { transform: scaleX(1); }
 
 .about-stat-num {
   font-family: 'Inter', sans-serif;
@@ -784,18 +837,28 @@ nav.scrolled {
 .hosting-teaser {
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 24px;
-  background: linear-gradient(135deg, #181818 0%, #111228 100%);
+  background: linear-gradient(135deg, #181818 0%, #1a1b22 100%);
   padding: 64px 48px;
   text-align: center;
   position: relative; overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
-
 .hosting-teaser::before {
   content: '';
   position: absolute; inset: 0;
   background: radial-gradient(ellipse at 50% 100%, rgba(67,56,202,0.15), transparent 70%);
   pointer-events: none;
+  opacity: 0.6; transition: opacity 0.4s;
 }
+.hosting-teaser::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--indigo2), transparent);
+  transform: scaleX(0); transition: transform 0.4s;
+}
+.hosting-teaser:hover { border-color: rgba(67,56,202,0.3); box-shadow: 0 24px 60px rgba(0,0,0,0.3); }
+.hosting-teaser:hover::before { opacity: 1; }
+.hosting-teaser:hover::after { transform: scaleX(1); }
 
 .hosting-plans {
   display: flex; justify-content: center; gap: 16px;
@@ -808,14 +871,22 @@ nav.scrolled {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 14px; padding: 20px 28px;
-  transition: all 0.2s;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
   min-width: 160px;
+  position: relative; overflow: hidden;
 }
-
+.hosting-plan-chip::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--indigo2), transparent);
+  transform: scaleX(0); transition: transform 0.35s;
+}
 .hosting-plan-chip:hover {
   border-color: rgba(67,56,202,0.4);
-  background: rgba(67,56,202,0.08);
+  background: rgba(67,56,202,0.1);
+  transform: translateY(-2px);
 }
+.hosting-plan-chip:hover::after { transform: scaleX(1); }
 
 .hosting-plan-price {
   font-family: 'Inter', sans-serif;
@@ -866,7 +937,24 @@ nav.scrolled {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 20px; padding: 36px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
 }
+.contact-form::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 0% 100%, rgba(67,56,202,0.1), transparent 65%);
+  opacity: 0; transition: opacity 0.4s; pointer-events: none;
+}
+.contact-form::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--indigo2), transparent);
+  transform: scaleX(0); transition: transform 0.4s;
+}
+.contact-form:hover { border-color: rgba(67,56,202,0.3); background: rgba(255,255,255,0.04); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.contact-form:hover::before { opacity: 1; }
+.contact-form:hover::after { transform: scaleX(1); }
 
 .form-group { margin-bottom: 18px; }
 
@@ -1294,7 +1382,7 @@ nav.scrolled {
 
 /* ━━━━ CARD STACK 3D ━━━━ */
 #cs-root {
-  perspective: 1200px;
+  perspective: 1400px;
 }
 
 .cs-card {
@@ -1316,7 +1404,7 @@ nav.scrolled {
 .cs-card img {
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   display: block;
   pointer-events: none;
   user-select: none;
@@ -1324,18 +1412,11 @@ nav.scrolled {
 
 .cs-card-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 40%,
-    rgba(0,0,0,0.5) 100%
-  );
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.5) 100%);
   pointer-events: none;
 }
 
-/* Scroll fade wrapper */
-#cs-wrapper {
-  transition: opacity 0.1s linear;
-}
+#cs-wrapper { transition: opacity 0.1s linear; }
 
 #cs-prev:hover, #cs-next:hover {
   background: rgba(255,255,255,0.12) !important;
@@ -1364,15 +1445,29 @@ nav.scrolled {
   transform: translateY(-1px);
 }
 
+/* ── MOBILE OPTIMISATION ── */
 @media (max-width: 900px) {
-  #cs-root { height: 380px !important; }
-  #cs-prev { left: -8px !important; }
-  #cs-next { right: -8px !important; }
+  #cs-root { height: 55vh !important; min-height: 380px !important; }
+  #cs-prev { left: 10px !important; }
+  #cs-next { right: 10px !important; }
+  #cs-name { font-size: 20px !important; }
+  #cs-cur { font-size: 28px !important; }
+  #portfolio > div:first-child { padding: 0 24px 48px !important; }
+  #cs-wrapper > div:last-child { padding: 0 24px !important; }
 }
 
 @media (max-width: 600px) {
-  #cs-root { height: 280px !important; }
-  #cs-name { font-size: 20px !important; }
+  #cs-root { height: 50vh !important; min-height: 280px !important; }
+  .cs-card { border-radius: 0 !important; }
+  .cs-card img { object-fit: cover !important; object-position: center center !important; }
+  #cs-prev { left: 8px !important; width: 38px !important; height: 38px !important; font-size: 18px !important; }
+  #cs-next { right: 8px !important; width: 38px !important; height: 38px !important; font-size: 18px !important; }
+  #cs-name { font-size: 18px !important; }
+  #cs-cur { font-size: 24px !important; }
+  #cs-view-btn { padding: 11px 18px !important; font-size: 12px !important; }
+  #cs-tags { display: none !important; }
+  #portfolio > div:first-child { padding: 0 20px 40px !important; }
+  #cs-wrapper > div:last-child { padding: 0 20px !important; }
 }
 
 /* ━━━━ SCROLL REVEAL ━━━━ */
@@ -1681,8 +1776,8 @@ footer {
     <li><a href="#services">Services</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#portfolio">Work</a></li>
-    <li><a href="#about">About</a></li>
     <li><a href="#hosting">Hosting</a></li>
+    <li><a href="#about">About</a></li>
   </ul>
   <div>
     <a class="nav-cta" href="#contact">Get a Quote</a>
@@ -1706,32 +1801,6 @@ footer {
       We make your<br>business look<br><em>unforgettable.</em>
     </h1>
 
-    <p class="hero-sub">
-      Motionlee crafts premium websites, product visuals, and motion content for small businesses ready to compete at the highest level.
-    </p>
-
-    <div class="hero-actions">
-      <a href="#contact" class="btn-lime">Get a Free Quote</a>
-      <a href="#portfolio" class="btn-ghost">See Our Work</a>
-    </div>
-
-    <div class="hero-stats">
-      <div style="text-align:center;">
-        <div class="hero-stat-num">48<span style="font-size:0.7em;color:rgba(255,255,255,0.5);">hr</span></div>
-        <div class="hero-stat-label">Website delivery</div>
-      </div>
-      <div style="text-align:center;">
-        <div class="hero-stat-num">£499</div>
-        <div class="hero-stat-label">Starting price</div>
-      </div>
-      <div style="text-align:center;">
-        <div class="hero-stat-num" style="display:inline-flex;align-items:center;gap:4px;">
-          <span>5</span>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="#D6FF3F" style="flex-shrink:0;margin-bottom:2px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-        <div class="hero-stat-label">Rated studio</div>
-      </div>
-    </div>
   </div>
 
   <div class="hero-ticker">
@@ -1753,33 +1822,36 @@ footer {
 </section>
 
 <!-- FEATURED PROJECTS — CARD STACK -->
-<section id="portfolio" style="padding:100px 0 140px;background:var(--ink);">
-  <div style="max-width:1100px;margin:0 auto;padding:0 48px;">
+<section id="portfolio" style="padding:100px 0 0;background:var(--ink);">
 
-    <!-- Header -->
+  <!-- Header — contained -->
+  <div style="max-width:1100px;margin:0 auto;padding:0 48px 72px;">
     <div class="eyebrow reveal" style="margin-bottom:16px;">Featured Projects</div>
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:80px;flex-wrap:wrap;gap:24px;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:24px;">
       <h2 class="section-title reveal reveal-delay-1">Designed to inspire.<br><em>Built to convert.</em></h2>
       <p class="section-sub reveal reveal-delay-2" style="max-width:280px;">Drag, click or use arrows to explore our work.</p>
     </div>
+  </div>
 
-    <!-- Card stack wrapper — fades as you scroll past -->
-    <div id="cs-wrapper" style="position:relative;">
+  <!-- Card stack — TRUE full width, no padding -->
+  <div id="cs-wrapper" style="position:relative;width:100%;">
 
-      <!-- Stack -->
-      <div id="cs-root" style="position:relative;height:520px;margin:0 auto;max-width:760px;">
-        <!-- Cards injected by JS -->
-      </div>
+    <!-- Stack — full viewport width -->
+    <div id="cs-root" style="position:relative;height:75vh;min-height:520px;width:100%;">
+      <!-- Cards injected by JS -->
+    </div>
 
-      <!-- Prev / Next -->
-      <button id="cs-prev" aria-label="Previous" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:200;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(8px);">‹</button>
-      <button id="cs-next" aria-label="Next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:200;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(8px);">›</button>
+    <!-- Prev / Next — float over the stack at screen edges -->
+    <button id="cs-prev" aria-label="Previous" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);z-index:200;width:48px;height:48px;border-radius:50%;background:rgba(17,17,17,0.7);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.8);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(12px);">‹</button>
+    <button id="cs-next" aria-label="Next" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);z-index:200;width:48px;height:48px;border-radius:50%;background:rgba(17,17,17,0.7);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.8);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(12px);">›</button>
 
+    <!-- Info bar — contained, sits below the full-width stack -->
+    <div style="max-width:1100px;margin:0 auto;padding:0 48px;">
       <!-- Dots -->
-      <div id="cs-dots" style="display:flex;justify-content:center;gap:8px;margin-top:32px;"></div>
+      <div id="cs-dots" style="display:flex;justify-content:center;gap:8px;margin-top:28px;"></div>
 
-      <!-- Info bar -->
-      <div style="margin-top:36px;display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:16px;">
+      <!-- Info -->
+      <div style="margin-top:24px;display:flex;align-items:center;justify-content:space-between;padding:24px 0 60px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:16px;">
         <div>
           <div id="cs-type" style="font-size:10px;color:var(--lime);letter-spacing:0.18em;text-transform:uppercase;font-weight:600;margin-bottom:8px;"></div>
           <div id="cs-name" style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-0.5px;line-height:1;margin-bottom:10px;"></div>
@@ -1787,8 +1859,8 @@ footer {
         </div>
         <div style="display:flex;align-items:center;gap:20px;flex-shrink:0;">
           <div style="text-align:right;">
-            <span id="cs-cur" style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#fff;letter-spacing:-1px;">1</span>
-            <span style="font-size:14px;color:rgba(255,255,255,0.2);"> / 6</span>
+            <span id="cs-cur" style="font-family:'Inter',sans-serif;font-size:36px;font-weight:800;color:#fff;letter-spacing:-0.02em;">1</span>
+            <span style="font-family:'Inter',sans-serif;font-size:14px;color:rgba(255,255,255,0.2);letter-spacing:-0.01em;"> / 6</span>
           </div>
           <button id="cs-view-btn" style="background:var(--lime);color:var(--ink);font-size:13px;font-weight:700;padding:13px 26px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;white-space:nowrap;">View Project →</button>
         </div>
@@ -1796,6 +1868,7 @@ footer {
     </div>
 
   </div>
+
 </section>
 
 <!-- CASE STUDY OVERLAY -->
@@ -2174,8 +2247,8 @@ footer {
             <div class="about-stat-label">Avg. delivery</div>
           </div>
           <div class="about-stat reveal reveal-delay-1">
-            <div class="about-stat-num">5<span>★</span></div>
-            <div class="about-stat-label">Rated studio</div>
+            <div class="about-stat-num" style="font-size:22px;letter-spacing:-0.5px;">AI</div>
+            <div class="about-stat-label">Powered Assistant</div>
           </div>
           <div class="about-stat reveal reveal-delay-2">
             <div class="about-stat-num"><span>£0</span></div>
@@ -2211,7 +2284,7 @@ footer {
       </div>
       <div style="margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <a href="#contact" class="btn-lime">Get Hosting</a>
-        <a href="https://motionlee.ai" target="_blank" class="btn-ghost">Client Portal ↗</a>
+        <a href="https://motionlee.ai" target="_blank" class="btn-ghost">Client Portal</a>
       </div>
     </div>
   </div>
